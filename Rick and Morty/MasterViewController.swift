@@ -19,6 +19,8 @@ class MasterViewController: UITableViewController {
     private var lastConnection: CharacterListQuery.Data.Character.Info?
     private var activeRequest: Cancellable?
     
+    var page: Int = 0
+    
     enum ListSection: Int, CaseIterable {
         case characters
         case loading
@@ -85,7 +87,7 @@ class MasterViewController: UITableViewController {
 //        } else {
 //            return 1
 //        }
-        return 0
+        return 1
       }
     }
     
@@ -167,18 +169,19 @@ class MasterViewController: UITableViewController {
     }
 
     private func loadMoreCharactersIfTheyExist() {
-      guard let connection = self.lastConnection else {
-        // We don't have stored launch details, load from scratch
-        self.loadMoreCharacters(from: nil)
-        return
-      }
+//      guard let connection = self.lastConnection else {
+//        // We don't have stored launch details, load from scratch
+//        self.loadMoreCharacters(from: nil)
+//        return
+//      }
+//
+//        guard connection.next! > 1 else {
+//        // No more launches to fetch
+//        return
+//      }
+        page += 1
         
-        guard connection.next! > 1 else {
-        // No more launches to fetch
-        return
-      }
-        
-        self.loadMoreCharacters(from: connection.next)
+        self.loadMoreCharacters(from: page)
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
